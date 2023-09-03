@@ -1,6 +1,6 @@
 ﻿using QuickDeploy.CliOptions;
 
-namespace QuickDeploy.Setup;
+namespace QuickDeploy.Commands;
 
 public interface IRunSetup
 {

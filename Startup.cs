@@ -1,25 +1,24 @@
 ﻿using CommandLine;
 using QuickDeploy.CliOptions;
-using QuickDeploy.Setup;
+using QuickDeploy.Commands;
 
 namespace QuickDeploy;
 
 public class Startup
 {
-    [Verb("setup", HelpText = "Setup a QuickDeploy server for global use")]
-    class SetupOptionsClass : SetupOptions {}
-
     private readonly IRunSetup _runSetup;
+    private readonly IRunInit _runInit;
 
-    public Startup(IRunSetup runSetup)
+    public Startup(IRunSetup runSetup, IRunInit runInit)
     {
         _runSetup = runSetup;
+        _runInit = runInit;
     }
 
-    public int Run(string[] args)
+    public void Run(string[] args)
     {
-        return CommandLine.Parser.Default.ParseArguments<SetupOptionsClass>(args).MapResult(
-            (SetupOptionsClass opts) => _runSetup.SetupQuickDeploy(opts), errs => 1
+        CommandLine.Parser.Default.ParseArguments<SetupOptions, InitOptions>(args).MapResult(
+            (SetupOptions opts) => _runSetup.SetupQuickDeploy(opts), (InitOptions opts) => _runInit.Init(opts), errs => 1
         );
     }
 }

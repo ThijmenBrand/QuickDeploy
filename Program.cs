@@ -1,7 +1,8 @@
 ﻿using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using QuickDeploy.CliOptions;
-using QuickDeploy.Setup;
+using QuickDeploy.Commands;
+using QuickDeploy.IO;
 
 namespace QuickDeploy;
 
@@ -18,6 +19,6 @@ class QuickDeploy
 
     private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<IRunSetup, RunSetup>();
+        services.AddSingleton<IRunSetup, RunSetup>().AddSingleton<IRunInit, RunInit>().AddSingleton<IConfig, Config>().AddSingleton<IUserPrompt, UserPrompt>();
     }
 }
