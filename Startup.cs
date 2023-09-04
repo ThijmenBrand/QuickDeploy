@@ -8,17 +8,22 @@ public class Startup
 {
     private readonly IRunSetup _runSetup;
     private readonly IRunInit _runInit;
+    private readonly IRunDeploy _runDeploy;
 
-    public Startup(IRunSetup runSetup, IRunInit runInit)
+    public Startup(IRunSetup runSetup, IRunInit runInit, IRunDeploy runDeploy)
     {
         _runSetup = runSetup;
         _runInit = runInit;
+        _runDeploy = runDeploy;
     }
 
-    public void Run(string[] args)
+    public async void Run(string[] args)
     {
-        CommandLine.Parser.Default.ParseArguments<SetupOptions, InitOptions>(args).MapResult(
-            (SetupOptions opts) => _runSetup.SetupQuickDeploy(opts), (InitOptions opts) => _runInit.Init(opts), errs => 1
+        await CommandLine.Parser.Default.ParseArguments<SetupOptions, InitOptions, DeployOptions>(args).MapResult(
+            (SetupOptions opts) => _runSetup.SetupQuickDeploy(opts),
+            (InitOptions opts) => _runInit.Init(opts),
+            (DeployOptions opts) => _runDeploy.Deploy(opts),
+            errs => Task.FromResult(0)
         );
     }
 }

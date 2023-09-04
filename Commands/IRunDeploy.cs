@@ -2,7 +2,7 @@
 
 namespace QuickDeploy.Commands;
 
-public interface IRunInit
+public interface IRunDeploy
 {
-    Task<int> Init(InitOptions opts);
+    Task<int> Deploy(DeployOptions opts);
 }

@@ -27,4 +27,13 @@ public class UserPrompt : IUserPrompt
         Console.Write(message);
         return Console.ReadLine();
     }
+
+    public void WriteText(string message, bool error)
+    {
+        if (error) Console.ForegroundColor = ConsoleColor.Red;
+        
+        Console.WriteLine(message);
+        
+        Console.ResetColor();
+    }
 }

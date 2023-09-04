@@ -14,7 +14,7 @@ public class RunSetup : IRunSetup
         _config = config;
     }
     
-    public int SetupQuickDeploy(SetupOptions opts)
+    public async Task<int> SetupQuickDeploy(SetupOptions opts)
     {
         if (_config.ConfigExists(IoConstants.GlobalConfigPath))
         {

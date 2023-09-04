@@ -4,5 +4,5 @@ namespace QuickDeploy.Commands;
 
 public interface IRunSetup
 {
-    int SetupQuickDeploy(SetupOptions opts);
+    Task<int> SetupQuickDeploy(SetupOptions opts);
 }

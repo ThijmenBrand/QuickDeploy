@@ -13,7 +13,7 @@ public class RunInit : IRunInit
         _config = config;
         _prompt = prompt;
     }
-    public int Init(InitOptions opts)
+    public async Task<int> Init(InitOptions opts)
     {
         var initOptions = new Dictionary<string, string>();
         
@@ -32,8 +32,7 @@ public class RunInit : IRunInit
         var removeDeployFolder = _prompt.Prompt("Please enter your remote folder path (optional): ");
         initOptions.Add(IoConstants.RemoteDeployFolderConfigKey, removeDeployFolder);
 
-        var localPath = Directory.GetCurrentDirectory() + @"\.QuickDeploy";
-        _config.WriteConfig(initOptions, localPath);
+        _config.WriteConfig(initOptions, _config.LocalConfigPath());
 
         return 0;
     }

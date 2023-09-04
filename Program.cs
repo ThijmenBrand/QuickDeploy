@@ -8,8 +8,6 @@ namespace QuickDeploy;
 
 class QuickDeploy
 {
-
-
     static void Main(string[] args)
     {
         var serviceProvider = new ServiceCollection();
@@ -19,6 +17,13 @@ class QuickDeploy
 
     private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<IRunSetup, RunSetup>().AddSingleton<IRunInit, RunInit>().AddSingleton<IConfig, Config>().AddSingleton<IUserPrompt, UserPrompt>();
+        //Command classes
+        services
+            .AddSingleton<IRunSetup, RunSetup>()
+            .AddSingleton<IRunInit, RunInit>()
+            .AddSingleton<IRunDeploy, RunDeploy>();
+        
+        //Service classes
+        services.AddSingleton<IConfig, Config>().AddSingleton<IUserPrompt, UserPrompt>();
     }
 }
